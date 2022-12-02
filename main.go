@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	_ "github.com/pedantic79/aoc2022go/day01"
 	"github.com/pedantic79/aoc2022go/framework"
 	_ "github.com/pedantic79/aoc2022go/startup"
 )

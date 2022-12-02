@@ -15,14 +15,14 @@ func IntAbs[I constraints.Integer](i I) I {
 }
 
 func IntPow[I constraints.Integer](n, m I) I {
-    if m == 0 {
-        return 1
-    }
-    result := n
-    for i := I(2); i <= m; i++ {
-        result *= n
-    }
-    return result
+	if m == 0 {
+		return 1
+	}
+	result := n
+	for i := I(2); i <= m; i++ {
+		result *= n
+	}
+	return result
 }
 
 func ModInv(a, m int64) int64 {
@@ -81,4 +81,12 @@ func Bool2Int[I constraints.Integer](b bool) I {
 		return 1
 	}
 	return 0
+}
+
+func Max[I constraints.Ordered](a, b I) I {
+	if a > b {
+		return a
+	} else {
+		return b
+	}
 }

@@ -1,7 +1,6 @@
 package day01
 
 import (
-	"sort"
 	"strings"
 
 	"github.com/pedantic79/aoc2022go/framework"
@@ -52,6 +51,22 @@ func part1(nums []int) int {
 }
 
 func part2(nums []int) int {
-	sort.Sort(sort.Reverse(sort.IntSlice(nums)))
-	return nums[0] + nums[1] + nums[2]
+	const LEN int = 3
+	var maxes [LEN]int
+
+	for _, num := range nums {
+		if num > maxes[LEN-1] {
+			for i := 0; i < LEN; i++ {
+				if num > maxes[i] {
+					for j := LEN - 1; j > i; j-- {
+						maxes[j] = maxes[j-1]
+					}
+					maxes[i] = num
+					break
+				}
+			}
+		}
+	}
+
+	return maxes[0] + maxes[1] + maxes[2]
 }

@@ -24,16 +24,16 @@ func RunPart2() framework.AoCResult {
 	return framework.Timer(day, 2, parse, part2)
 }
 
-func unique(s string) bool {
-	for i := range s {
-		for j := i + 1; j < len(s); j++ {
+func unique(s string) (int, bool) {
+	for i := len(s) - 1; i > 0; i-- {
+		for j := i - 1; j >= 0; j-- {
 			if s[i] == s[j] {
-				return false
+				return j + 1, false
 			}
 		}
 	}
 
-	return true
+	return 0, true
 }
 
 func parse(input string) string {
@@ -41,8 +41,10 @@ func parse(input string) string {
 }
 
 func solve(input string, width int) int {
-	for i := 0; i < len(input)-width; i++ {
-		if unique(input[i : i+width]) {
+	for i := 0; i < len(input)-width; {
+		if j, flag := unique(input[i : i+width]); !flag {
+			i += j
+		} else {
 			return i + width
 		}
 	}

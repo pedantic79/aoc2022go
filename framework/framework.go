@@ -69,3 +69,12 @@ func Timer[T any, R any](day uint, part uint, parse func(string) T, run func(T) 
 
 	return AoCResult{Day: day, Part: part, ParseTime: parseTime, RunTime: runTime, Value: ans1}
 }
+
+func BenchInput[T any](day uint, parse func(string) T) T {
+	input := ReadFile(GenerateFileName(day))
+	return parse(input)
+}
+
+func Bench[T any, R any](input T, run func(T) R) {
+	run(input)
+}

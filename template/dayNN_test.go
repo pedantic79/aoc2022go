@@ -13,3 +13,15 @@ func TestRegression(t *testing.T) {
 	}
 
 }
+
+func BenchmarkPart1(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		RunPart1()
+	}
+}
+
+func BenchmarkPart2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		RunPart2()
+	}
+}

@@ -10,6 +10,7 @@ import (
 	_ "github.com/pedantic79/aoc2022go/day02"
 	_ "github.com/pedantic79/aoc2022go/day03"
 	_ "github.com/pedantic79/aoc2022go/day04"
+	_ "github.com/pedantic79/aoc2022go/day05"
 )
 
 func main() {

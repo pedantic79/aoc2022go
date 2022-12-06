@@ -90,3 +90,18 @@ func Max[I constraints.Ordered](a, b I) I {
 		return b
 	}
 }
+
+func Min[I constraints.Ordered](a, b I) I {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
+}
+
+func Reverse[T any](s []T) {
+	for i := len(s)/2 - 1; i >= 0; i-- {
+		opp := len(s) - 1 - i
+		s[i], s[opp] = s[opp], s[i]
+	}
+}

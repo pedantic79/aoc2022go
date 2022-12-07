@@ -53,11 +53,8 @@ func parse(input string) map[string]int {
 			}
 			i--
 
-			dst := make([]string, len(cwd))
-			copy(dst, cwd)
-			for len(dst) > 0 {
-				dirs[strings.Join(dst, "/")] += total
-				dst = dst[:len(dst)-1]
+			for end := len(cwd); end >= 1; end-- {
+				dirs[strings.Join(cwd[:end], "/")] += total
 			}
 		}
 	}

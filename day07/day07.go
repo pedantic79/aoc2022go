@@ -66,14 +66,13 @@ func parse(input string) []int {
 }
 
 func part1(dirs []int) int {
-	total := 0
-	for _, v := range dirs {
+	return util.SumFunc(dirs, func(v int) int {
 		if v < 100000 {
-			total += v
+			return v
+		} else {
+			return 0
 		}
-	}
-
-	return total
+	})
 }
 
 func part2(dirs []int) int {

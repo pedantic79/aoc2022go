@@ -28,42 +28,44 @@ func RunPart2() framework.AoCResult {
 	return framework.Timer(day, 2, parse, part2)
 }
 
-func parse(input string) map[string]int {
-	dirs := map[string]int{}
-	lines := strings.Split(input, "\n")
-	cwd := []string{}
+func calculate_sizes(lines []string, i *int, sizes *[]int) int {
+	total := 0
 
-	for i := 0; i < len(lines); i++ {
-		if strings.HasPrefix(lines[i], "$ cd") {
-			line := strings.Split(lines[i], " ")
+	for *i < len(lines) {
+		line := lines[*i]
+		*i++
+		if strings.HasPrefix(line, "$ cd") {
+			line := strings.Split(line, " ")
+			dir := line[len(line)-1]
 
-			if line[len(line)-1] == ".." {
-				cwd = cwd[:len(cwd)-1]
-			} else {
-				cwd = append(cwd, line[len(line)-1])
+			if dir == ".." {
+				break
+			} else if dir != "/" {
+				total += calculate_sizes(lines, i, sizes)
 			}
-		} else if strings.HasPrefix(lines[i], "$ ls") {
-			total := 0
-			i++
-			for i < len(lines) && !strings.HasPrefix(lines[i], "$") {
-				if !strings.HasPrefix(lines[i], "dir ") {
-					total += util.Atoi(strings.Split(lines[i], " ")[0])
+		} else if strings.HasPrefix(line, "$ ls") {
+			for ; *i < len(lines) && !strings.HasPrefix(lines[*i], "$"); *i++ {
+				if !strings.HasPrefix(lines[*i], "dir ") {
+					total += util.Atoi(strings.Split(lines[*i], " ")[0])
 				}
-				i++
 			}
-			i--
-
-			for end := len(cwd); end >= 1; end-- {
-				dirs[strings.Join(cwd[:end], "/")] += total
-			}
+			*i--
 		}
 	}
 
-	// fmt.Println(dirs)
-	return dirs
+	*sizes = append(*sizes, total)
+	return total
 }
 
-func part1(dirs map[string]int) int {
+func parse(input string) []int {
+	lines := strings.Split(input, "\n")
+	res := []int{}
+	i := 0
+	calculate_sizes(lines, &i, &res)
+	return res
+}
+
+func part1(dirs []int) int {
 	total := 0
 	for _, v := range dirs {
 		if v < 100000 {
@@ -74,8 +76,8 @@ func part1(dirs map[string]int) int {
 	return total
 }
 
-func part2(dirs map[string]int) int {
-	remaining := 30000000 - (70000000 - dirs["/"])
+func part2(dirs []int) int {
+	remaining := 30000000 - (70000000 - dirs[len(dirs)-1])
 
 	min := math.MaxInt
 	for _, v := range dirs {

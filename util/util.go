@@ -105,3 +105,13 @@ func Reverse[T any](s []T) {
 		s[i], s[opp] = s[opp], s[i]
 	}
 }
+
+func SigNum[I constraints.Signed](a I) I {
+	if a > 0 {
+		return 1
+	} else if a < 0 {
+		return -1
+	} else {
+		return 0
+	}
+}

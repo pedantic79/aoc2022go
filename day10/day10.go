@@ -39,17 +39,17 @@ func parse_line(line string) (bool, int) {
 	}
 }
 
-func solve[T any](lines []string, initial *T, update func(*T, int, int)) {
+func solve(lines []string, update func(int, int)) {
 	x := 1
 	cycle := 1
 
 	for _, line := range lines {
-		update(initial, cycle, x)
+		update(cycle, x)
 		if isAddx, count := parse_line(line); !isAddx {
 			cycle++
 		} else {
 			cycle++
-			update(initial, cycle, x)
+			update(cycle, x)
 			cycle++
 			x += count
 		}
@@ -58,9 +58,9 @@ func solve[T any](lines []string, initial *T, update func(*T, int, int)) {
 
 func part1(lines []string) int {
 	total := 0
-	solve(lines, &total, func(t *int, cycle, x int) {
+	solve(lines, func(cycle, x int) {
 		if cycle%40 == 20 {
-			*t += cycle * x
+			total += cycle * x
 		}
 	})
 
@@ -87,7 +87,7 @@ func part2(lines []string) string {
 		[]byte("........................................"),
 	}
 
-	solve(lines, &screen, draw)
+	solve(lines, func(cycle, x int) { draw(&screen, cycle, x) })
 
 	res := strings.Builder{}
 	for i := range screen {

@@ -67,33 +67,23 @@ func part1(lines []string) int {
 	return total
 }
 
-func draw(screen *[][]byte, cycle, x int) {
-	cycle -= 1
-	row := cycle / 40
-	col := cycle % 40
+func draw(screen *strings.Builder, cycle, x int) {
+	col := (cycle - 1) % 40
+
+	if col == 0 {
+		screen.WriteByte('\n')
+	}
 
 	if util.IntAbs(x-col) <= 1 {
-		(*screen)[row][col] = '#'
+		screen.WriteByte('#')
+	} else {
+		screen.WriteByte('.')
 	}
 }
 
 func part2(lines []string) string {
-	screen := [][]byte{
-		[]byte("........................................"),
-		[]byte("........................................"),
-		[]byte("........................................"),
-		[]byte("........................................"),
-		[]byte("........................................"),
-		[]byte("........................................"),
-	}
-
+	screen := strings.Builder{}
 	solve(lines, func(cycle, x int) { draw(&screen, cycle, x) })
 
-	res := strings.Builder{}
-	for i := range screen {
-		res.WriteByte('\n')
-		res.Write(screen[i])
-	}
-
-	return res.String()
+	return screen.String()
 }

@@ -42,7 +42,7 @@ func parseTrailingNum(line string) int {
 }
 
 func parseItems(line string) []int {
-	i := strings.Index(line, ": ") + 1
+	i := strings.Index(line, ": ") + 2
 	nums := strings.Split(line[i:], ", ")
 
 	res := []int{}
@@ -54,13 +54,13 @@ func parseItems(line string) []int {
 }
 
 func parseOp(line string) func(int) int {
-	i := strings.Index(line, " = ") + 1
+	i := strings.Index(line, " = ") + 3
 	symbols := strings.Split(line[i:], " ")
-	if symbols[3] == "old" {
+	if symbols[2] == "old" {
 		return func(x int) int { return x * x }
 	}
-	num := util.Atoi(symbols[3])
-	if symbols[2] == "*" {
+	num := util.Atoi(symbols[2])
+	if symbols[1] == "*" {
 		return func(x int) int { return num * x }
 	}
 

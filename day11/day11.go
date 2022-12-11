@@ -54,13 +54,13 @@ func parseItems(line string) []int {
 }
 
 func parseOp(line string) func(int) int {
-	i := strings.Index(line, " = ")
+	i := strings.Index(line, " = ") + 1
 	symbols := strings.Split(line[i:], " ")
-	if symbols[4] == "old" {
+	if symbols[3] == "old" {
 		return func(x int) int { return x * x }
 	}
-	num := util.Atoi(symbols[4])
-	if symbols[3] == "*" {
+	num := util.Atoi(symbols[3])
+	if symbols[2] == "*" {
 		return func(x int) int { return num * x }
 	}
 

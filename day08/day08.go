@@ -42,7 +42,7 @@ func parse(input string) [][]byte {
 }
 
 func left(grid [][]byte, r, c int) []byte {
-	ans := []byte{}
+	ans := make([]byte, 0, len(grid))
 	for ci := c - 1; ci >= 0; ci-- {
 		ans = append(ans, grid[r][ci])
 	}
@@ -54,7 +54,7 @@ func right(grid [][]byte, r, c int) []byte {
 }
 
 func up(grid [][]byte, r, c int) []byte {
-	ans := []byte{}
+	ans := make([]byte, 0, len(grid))
 	for ri := r - 1; ri >= 0; ri-- {
 		ans = append(ans, grid[ri][c])
 	}
@@ -62,7 +62,7 @@ func up(grid [][]byte, r, c int) []byte {
 }
 
 func down(grid [][]byte, r, c int) []byte {
-	ans := []byte{}
+	ans := make([]byte, 0, len(grid))
 	for ri := r + 1; ri < len(grid); ri++ {
 		ans = append(ans, grid[ri][c])
 	}
@@ -70,13 +70,7 @@ func down(grid [][]byte, r, c int) []byte {
 }
 
 func all_less(slice []byte, max byte) bool {
-	for i := range slice {
-		if slice[i] >= max {
-			return false
-		}
-	}
-
-	return true
+	return util.All(slice, func(x byte) bool { return x < max })
 }
 
 func check(grid [][]byte, r, c int) bool {

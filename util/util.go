@@ -115,3 +115,13 @@ func SigNum[I constraints.Signed](a I) I {
 		return 0
 	}
 }
+
+func All[T any](slice []T, predicate func(T) bool) bool {
+	for i := range slice {
+		if !predicate(slice[i]) {
+			return false
+		}
+	}
+
+	return true
+}
